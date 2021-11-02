@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Auto-bors{% endblock %}</title>
+
+    {% block stylesheets %}
+        {# {{ encore_entry_link_tags('app') }} #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+              crossorigin="anonymous">
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
+    {% endblock %}
+
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+
+    <div class="row">
+
+        <div class="col-form-label-lg">
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                You are signed in as {{ app.user.username }},
+                <form method="post" action="{{ path('app_logout') }}">
+                    <button class="btn btn-primary me-md-2" onclick="window.location='{{ path('app_logout') }}'">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    You are not signed in,
+                    <form action="{{ path('login') }}">
+                        <button class="btn btn-primary me-md-2" onclick="window.location='{{ path('login') }}'">Login
+                        </button>
+                    </form>
+                    <form action="{{ path('app_register') }}">
+                        <button class="btn btn-primary" type="button"
+                                onclick="window.location='{{ path('app_register') }}'">
+                            Registration
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+</nav>
+
+
+{% block body %}
+{% endblock %}
+</body>
+</html>
