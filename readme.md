@@ -1,18 +1,22 @@
 **first**
 
+
 create .env .env.local file
 
-configure in .env.local DATBASE_URL
 
-for example
+then configure in .env.local the DATBASE_URL
 
-DATABASE_URL="mysql://databaseLogin:databasePassword@projectName_mysql:3306/name?serverVersion=mariadb-10.6.4"
-APP_SECRET=""
+
+then check makefile.
+
+
+Makefile is a good tool for self-documentation. Using makefile you clearly understand what to do next.
 
 
 
 relations:
 
-one Post may have many comments (ManyToOne)
+One Post may have many comments (ManyToOne)
 
-comment cant be nullable becouse it cant exixt without post
+
+Comment can not be nullable because it can not exist without a Post entity.
