@@ -21,6 +21,9 @@ class RegistrationController extends AbstractController
         GuardAuthenticatorHandler $guardHandler,
         LoginFormAuthenticator $authenticator
     ): Response {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_homepage');
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

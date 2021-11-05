@@ -20,19 +20,21 @@
 
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light" style="background-color: #e398ff;">
 
-    <div class="row">
+    <div class="container-sm">
 
-        <div class="col-form-label-lg">
+        <div class="container-fluid">
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 You are signed in as {{ app.user.username }},
                 <form method="post" action="{{ path('app_logout') }}">
                     <button class="btn btn-primary me-md-2" onclick="window.location='{{ path('app_logout') }}'">
                         Logout
                     </button>
                 </form>
+            </div>
             {% else %}
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     You are not signed in,
@@ -51,6 +53,17 @@
         </div>
     </div>
 
+
+
+    <div class="container-xxl fs-2">
+        <ol class="breadcrumb" >
+            <li class="breadcrumb-item"><a class="fs-2" href="/">Home</a></li>
+            <li class="breadcrumb-item"><a class="fs-2" href="/post">Posts</a></li>
+            <li class="breadcrumb-item"><a class="fs-2" href="/comment">Comments</a></li>
+        </ol>
+    </div>
+
+    </div>
 
 </nav>
 
