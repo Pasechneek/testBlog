@@ -53,6 +53,8 @@ class PostController extends AbstractController
     #[Route('/{id}/edit', name: 'post_edit', methods: ['GET','POST'])]
     public function edit(Request $request, Post $post): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -71,6 +73,8 @@ class PostController extends AbstractController
     #[Route('/{id}', name: 'post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
