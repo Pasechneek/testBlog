@@ -21,12 +21,19 @@ class PostController extends AbstractController
         ]);
     }
 
+    //careful
+    private $author;
+    private $authorId;
+
     #[Route('/new', name: 'post_new', methods: ['GET','POST'])]
     public function new(Request $request): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
+
+        //careful
+        $this->author = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -55,6 +62,11 @@ class PostController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
+        if ($this->author !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+            // return $this->redirectToRoute('/error');
+        }
+
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
@@ -75,6 +87,11 @@ class PostController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
+        if ($this->author !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+           // return $this->redirectToRoute('/error');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($post);
@@ -83,4 +100,5 @@ class PostController extends AbstractController
 
         return $this->redirectToRoute('post_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
